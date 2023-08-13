@@ -84,6 +84,30 @@ def status_method(bot,update,args):
         else:
           bot.sendMessage(update.message.chat.id,"Unauthorized")
 
+def restart_ocserv_method(bot,update,args):
+    sender_chat_id = update.message.chat.id
+    if sender_chat_id in admin_chat_ids:
+        x = subprocess.check_output(['./restart_ocserv.sh'],shell=True)
+        bot.sendMessage(update.message.chat.id,x.decode("utf-8"))
+    else:
+        bot.sendMessage(update.message.chat.id,"Unauthorized")
+
+def restart_warp_method(bot,update,args):
+    sender_chat_id = update.message.chat.id
+    if sender_chat_id in admin_chat_ids:
+        x = subprocess.check_output(['./restart_warp.sh'],shell=True)
+        bot.sendMessage(update.message.chat.id,x.decode("utf-8"))
+    else:
+        bot.sendMessage(update.message.chat.id,"Unauthorized")
+
+def restart_gost_method(bot,update,args):
+    sender_chat_id = update.message.chat.id
+    if sender_chat_id in admin_chat_ids:
+        x = subprocess.check_output(['./restart_gost.sh'],shell=True)
+        bot.sendMessage(update.message.chat.id,x.decode("utf-8"))
+    else:
+        bot.sendMessage(update.message.chat.id,"Unauthorized")
+  
 ######################################################################################################
 
 create_command = CommandHandler('create',create_method,pass_args=True)
@@ -103,6 +127,15 @@ updater.dispatcher.add_handler(disconnect_command)
 
 status_command = CommandHandler('status',status_method,pass_args=True)
 updater.dispatcher.add_handler(status_command)
+
+restart_ocserv_command = CommandHandler('ocserv',restart_ocserv_method,pass_args=True)
+updater.dispatcher.add_handler(restart_ocserv_command)
+
+restart_warp_command = CommandHandler('warp',restart_warp_method,pass_args=True)
+updater.dispatcher.add_handler(restart_warp_command)
+
+restart_gost_command = CommandHandler('gost',restart_gost_method,pass_args=True)
+updater.dispatcher.add_handler(restart_gost_command)
 
 ######################################################################################################
 
